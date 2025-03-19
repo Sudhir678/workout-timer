@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Timer</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            margin-bottom: 30px;
+        }
+        button {
+            font-size: 20px;
+            padding: 15px;
+            margin: 20px;
+            cursor: pointer;
+        }
+        #timer {
+            font-size: 40px;
+            margin: 40px;
+        }
+        #set-counter {
+            font-size: 30px;
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Workout Timer</h1>
+    <h2>Set Counter: <span id="set-counter">0</span></h2>
+    <button onclick="startWorkout()">Start Set</button>
+    <div id="timer">02:00</div>
+    <audio id="beep" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+
+    <script>
+        let sets = 0;
+        let timer;
+        function startWorkout() {
+            sets++;
+            if (sets > 5) sets = 1; // Reset set counter after 5
+            document.getElementById("set-counter").innerText = sets;
+            startTimer();
+        }
+        
+        function startTimer() {
+            clearInterval(timer);
+            let time = 120;
+            updateDisplay(time);
+            timer = setInterval(() => {
+                time--;
+                updateDisplay(time);
+                if (time <= 0) {
+                    clearInterval(timer);
+                    document.getElementById("beep").play();
+                    setTimeout(() => document.getElementById("beep").pause(), 2000);
+                }
+            }, 1000);
+        }
+        
+        function updateDisplay(time) {
+            let minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            document.getElementById("timer").innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+</html>
