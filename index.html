@@ -15,7 +15,7 @@
         h1, h2 {
             margin-bottom: 30px;
         }
-        button {
+        button, select {
             font-size: 20px;
             padding: 15px;
             margin: 20px;
@@ -30,10 +30,17 @@
             margin: 30px;
         }
     </style>
+    <link rel="apple-touch-icon" sizes="192x192" href="icon.png">
 </head>
 <body>
     <h1>Workout Timer</h1>
     <h2>Set Counter: <span id="set-counter">0</span></h2>
+    <label for="rest-time">Select Rest Time:</label>
+    <select id="rest-time">
+        <option value="30">30 sec</option>
+        <option value="60">1 min</option>
+        <option value="120" selected>2 min</option>
+    </select>
     <button onclick="startWorkout()">Start Set</button>
     <div id="timer">02:00</div>
     <audio id="beep" src="https://www.soundjay.com/button/beep-07.wav"></audio>
@@ -41,6 +48,7 @@
     <script>
         let sets = 0;
         let timer;
+        
         function startWorkout() {
             sets++;
             if (sets > 5) sets = 1; // Reset set counter after 5
@@ -50,15 +58,16 @@
         
         function startTimer() {
             clearInterval(timer);
-            let time = 120;
+            let time = parseInt(document.getElementById("rest-time").value, 10);
             updateDisplay(time);
             timer = setInterval(() => {
                 time--;
                 updateDisplay(time);
                 if (time <= 0) {
                     clearInterval(timer);
-                    document.getElementById("beep").play();
-                    setTimeout(() => document.getElementById("beep").pause(), 2000);
+                    let beep = document.getElementById("beep");
+                    beep.play().catch(() => console.log("Audio autoplay blocked"));
+                    setTimeout(() => { beep.pause(); beep.currentTime = 0; }, 2000);
                 }
             }, 1000);
         }
