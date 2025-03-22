@@ -3,80 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Timer</title>
+    <title>Timer with Click Counter</title>
     <link rel="manifest" href="manifest.json">
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            padding: 50px;
-            background-color: #f4f4f4;
+            background: #121212;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
-        h1, h2 {
-            margin-bottom: 30px;
+        .container {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 250px;
         }
-        button, select {
-            font-size: 20px;
-            padding: 15px;
-            margin: 20px;
+        #timer-display {
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
             cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 3px solid white;
         }
-        #timer {
-            font-size: 40px;
-            margin: 40px;
+        #start { background: #4caf50; color: white; }
+        #stop { background: #f44336; color: white; }
+        #reset { background: #2196f3; color: white; margin-top: 10px; }
+        #click-counter {
+            font-size: 1.5rem;
         }
-        #set-counter {
-            font-size: 30px;
-            margin: 30px;
+        select {
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1rem;
         }
     </style>
-    <link rel="apple-touch-icon" sizes="192x192" href="icon.png">
 </head>
 <body>
-    <h1>Workout Timer</h1>
-    <h2>Set Counter: <span id="set-counter">0</span></h2>
-    <label for="rest-time">Select Rest Time:</label>
-    <select id="rest-time">
-        <option value="30">30 sec</option>
-        <option value="60">1 min</option>
-        <option value="120" selected>2 min</option>
-    </select>
-    <button onclick="startWorkout()">Start Set</button>
-    <div id="timer">02:00</div>
-    <audio id="beep" src="https://www.soundjay.com/button/beep-07.wav"></audio>
-
+    <div class="container">
+        <h2>Timer</h2>
+        <select id="time-select">
+            <option value="30">30 Seconds</option>
+            <option value="60">1 Minute</option>
+            <option value="120">2 Minutes</option>
+        </select>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <div id="timer-display">00:00</div>
+        <div id="click-counter">Clicks: 0</div>
+        <button id="click-btn">Sets</button>
+        <button id="reset">Reset</button>
+    </div>
+    <audio id="beep" src="beep.mp3"></audio>
+    
     <script>
-        let sets = 0;
         let timer;
-        
-        function startWorkout() {
-            sets++;
-            if (sets > 5) sets = 1; // Reset set counter after 5
-            document.getElementById("set-counter").innerText = sets;
-            startTimer();
-        }
-        
-        function startTimer() {
+        let timeLeft = 0;
+        let clickCount = 0;
+        const display = document.getElementById("timer-display");
+        const beep = document.getElementById("beep");
+
+        document.getElementById("start").addEventListener("click", function() {
+            timeLeft = parseInt(document.getElementById("time-select").value);
+            if (timeLeft > 0) {
+                clearInterval(timer);
+                timer = setInterval(updateTimer, 1000);
+            }
+        });
+
+        document.getElementById("stop").addEventListener("click", function() {
             clearInterval(timer);
-            let time = parseInt(document.getElementById("rest-time").value, 10);
-            updateDisplay(time);
-            timer = setInterval(() => {
-                time--;
-                updateDisplay(time);
-                if (time <= 0) {
-                    clearInterval(timer);
-                    let beep = document.getElementById("beep");
-                    beep.play().catch(() => console.log("Audio autoplay blocked"));
-                    setTimeout(() => { beep.pause(); beep.currentTime = 0; }, 2000);
-                }
-            }, 1000);
-        }
-        
-        function updateDisplay(time) {
-            let minutes = Math.floor(time / 60);
-            let seconds = time % 60;
-            document.getElementById("timer").innerText = 
-                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        });
+
+        document.getElementById("reset").addEventListener("click", function() {
+            clearInterval(timer);
+            display.textContent = "00:00";
+            clickCount = 0;
+            document.getElementById("click-counter").textContent = "Clicks: 0";
+        });
+
+        document.getElementById("click-btn").addEventListener("click", function() {
+            clickCount++;
+            document.getElementById("click-counter").textContent = "Clicks: " + clickCount;
+        });
+
+        function updateTimer() {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                beep.play();
+                return;
+            }
+            timeLeft--;
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
         }
     </script>
 </body>
