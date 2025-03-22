@@ -26,7 +26,7 @@
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            width: 250px;
+            width: 300px;
         }
         #timer-display {
             font-size: 3rem;
@@ -42,8 +42,8 @@
             border: 3px solid white;
         }
         #start { background: #4caf50; color: white; }
-        #stop { background: #f44336; color: white; }
-        #reset { background: #2196f3; color: white; margin-top: 10px; }
+        #reset-timer { background: #f44336; color: white; }
+        #reset-clicks { background: #2196f3; color: white; }
         #click-counter {
             font-size: 1.5rem;
         }
@@ -63,11 +63,11 @@
             <option value="120">2 Minutes</option>
         </select>
         <button id="start">Start</button>
-        <button id="stop">Stop</button>
+        <button id="reset-timer">Reset Timer</button>
         <div id="timer-display">00:00</div>
         <div id="click-counter">Clicks: 0</div>
         <button id="click-btn">Sets</button>
-        <button id="reset">Reset</button>
+        <button id="reset-clicks">Reset Clicks</button>
     </div>
     <audio id="beep" src="beep.mp3"></audio>
     
@@ -86,13 +86,12 @@
             }
         });
 
-        document.getElementById("stop").addEventListener("click", function() {
-            clearInterval(timer);
-        });
-
-        document.getElementById("reset").addEventListener("click", function() {
+        document.getElementById("reset-timer").addEventListener("click", function() {
             clearInterval(timer);
             display.textContent = "00:00";
+        });
+
+        document.getElementById("reset-clicks").addEventListener("click", function() {
             clickCount = 0;
             document.getElementById("click-counter").textContent = "Clicks: 0";
         });
@@ -105,7 +104,7 @@
         function updateTimer() {
             if (timeLeft <= 0) {
                 clearInterval(timer);
-                beep.play();
+                beep.play().catch(error => console.log("Playback error: ", error));
                 return;
             }
             timeLeft--;
