@@ -2,116 +2,177 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timer with Click Counter</title>
+    <title>Timer and Click Counter</title>
     <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            background: #121212;
-            color: white;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #fff5f8 0%, #ffd1dc 100%);
         }
         .container {
-            background: #1e1e1e;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.85);
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 350px;
         }
-        #timer-display {
-            font-size: 3rem;
+        #timer {
+            font-size: 2.5em;
             margin: 20px 0;
+            color: #333;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .button-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         button {
+            margin: 0;
             padding: 10px 20px;
-            margin: 5px;
-            border: none;
+            font-size: 1em;
             cursor: pointer;
-            font-size: 1rem;
+            border: none;
             border-radius: 5px;
-            border: 3px solid white;
+            transition: all 0.2s ease;
+            background: linear-gradient(to right, #ffb6c1, #ffc0cb);
+            color: white;
         }
-        #start { background: #4caf50; color: white; }
-        #reset-timer { background: #f44336; color: white; }
-        #reset-clicks { background: #2196f3; color: white; }
-        #click-counter {
-            font-size: 1.5rem;
+        .reset-btn {
+            background: linear-gradient(to right, #ffcccb, #ffa07a);
+        }
+        .click-btn {
+            background: linear-gradient(to right, #ffc0cb, #ffb6c1);
+        }
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button:active {
+            transform: scale(0.95);
         }
         select {
-            padding: 10px;
+            margin: 10px 0;
+            padding: 5px;
             border-radius: 5px;
-            font-size: 1rem;
+            border: 1px solid #ffb6c1;
+        }
+        #clickCounter {
+            margin: 20px 0;
+            font-size: 1.2em;
+            color: #333;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Timer</h2>
-        <select id="time-select">
-            <option value="30">30 Seconds</option>
-            <option value="60">1 Minute</option>
-            <option value="120">2 Minutes</option>
+        <div id="timer">00:00</div>
+        
+        <select id="timerSelect">
+            <option value="30">30 seconds</option>
+            <option value="60">1 minute</option>
+            <option value="120">2 minutes</option>
         </select>
-        <button id="start">Start</button>
-        <button id="reset-timer">Reset Timer</button>
-        <div id="timer-display">00:00</div>
-        <div id="click-counter">Clicks: 0</div>
-        <button id="click-btn">Sets</button>
-        <button id="reset-clicks">Reset Clicks</button>
+        
+        <div class="button-container">
+            <button id="startBtn">Start Timer</button>
+            <button id="timerResetBtn" class="reset-btn">Reset Timer</button>
+        </div>
+        
+        <div id="clickCounter">0</div>
+        
+        <div class="button-container">
+            <button id="clickBtn" class="click-btn">Click</button>
+            <button id="clickResetBtn" class="reset-btn">Reset Clicks</button>
+        </div>
     </div>
-    <audio id="beep" src="beep.mp3"></audio>
-    
+
+    <audio id="beepSound" src="beep.mp3"></audio>
+
     <script>
+        const timerDisplay = document.getElementById('timer');
+        const timerSelect = document.getElementById('timerSelect');
+        const startBtn = document.getElementById('startBtn');
+        const timerResetBtn = document.getElementById('timerResetBtn');
+        const clickBtn = document.getElementById('clickBtn');
+        const clickResetBtn = document.getElementById('clickResetBtn');
+        const clickCounterDisplay = document.getElementById('clickCounter');
+        const beepSound = document.getElementById('beepSound');
+
         let timer;
-        let timeLeft = 0;
+        let timeLeft;
         let clickCount = 0;
-        const display = document.getElementById("timer-display");
-        const beep = document.getElementById("beep");
+        let isTimerRunning = false;
 
-        document.getElementById("start").addEventListener("click", function() {
-            timeLeft = parseInt(document.getElementById("time-select").value);
-            if (timeLeft > 0) {
-                clearInterval(timer);
-                timer = setInterval(updateTimer, 1000);
-            }
-        });
-
-        document.getElementById("reset-timer").addEventListener("click", function() {
-            clearInterval(timer);
-            display.textContent = "00:00";
-        });
-
-        document.getElementById("reset-clicks").addEventListener("click", function() {
-            clickCount = 0;
-            document.getElementById("click-counter").textContent = "Clicks: 0";
-        });
-
-        document.getElementById("click-btn").addEventListener("click", function() {
-            clickCount++;
-            document.getElementById("click-counter").textContent = "Clicks: " + clickCount;
-        });
-
-        function updateTimer() {
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                beep.play().catch(error => console.log("Playback error: ", error));
-                return;
-            }
-            timeLeft--;
-            let mins = Math.floor(timeLeft / 60);
-            let secs = timeLeft % 60;
-            display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        function updateTimerDisplay(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
         }
+
+        function startTimer() {
+            if (isTimerRunning) return;
+            
+            timeLeft = parseInt(timerSelect.value);
+            isTimerRunning = true;
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay(timeLeft);
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    isTimerRunning = false;
+                    beepSound.play();
+                    timerDisplay.textContent = '00:00';
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            isTimerRunning = false;
+            timeLeft = parseInt(timerSelect.value);
+            updateTimerDisplay(timeLeft);
+        }
+
+        function updateClickCounter() {
+            clickCount++;
+            clickCounterDisplay.textContent = `${clickCount}`;
+        }
+
+        function resetClickCounter() {
+            clickCount = 0;
+            clickCounterDisplay.textContent = '0';
+        }
+
+        startBtn.addEventListener('click', () => {
+            startTimer();
+        });
+
+        clickBtn.addEventListener('click', () => {
+            updateClickCounter();
+        });
+
+        timerResetBtn.addEventListener('click', resetTimer);
+        clickResetBtn.addEventListener('click', resetClickCounter);
+
+        // Initialize timer display
+        updateTimerDisplay(parseInt(timerSelect.value));
     </script>
 </body>
 </html>
