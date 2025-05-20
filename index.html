@@ -2,20 +2,425 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Workout Timer</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
-    <link rel=icon href="favicon.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workouts</title>
+</head>
+<body>
+    <div class="container">
+        <div class="table-buttons">
+            <button class="table-btn active" data-table="pushA">Push A</button>
+            <button class="table-btn" data-table="pullA">Pull A</button>
+            <button class="table-btn" data-table="legsA">Legs A</button>
+            <button class="table-btn" data-table="pushB">Push B</button>
+            <button class="table-btn" data-table="pullB">Pull B</button>
+            <button class="table-btn" data-table="legsB">Legs B</button>
+        </div>
+
+        <div class="table-container">
+            <table id="pushA" class="workout-table">
+                <thead>
+                    <tr>
+                        <th>Exercise</th>
+                        <th>Sets</th>
+                        <th>Reps</th>
+                        <th>Tempo</th>
+                        <th>Rest</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Decline Push-up</td>
+                        <td>4</td>
+                        <td>15–20</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Drop to knees after failure</td>
+                    </tr>
+                    <tr>
+                        <td>Dumbbell Floor Press</td>
+                        <td>4</td>
+                        <td>10–12</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Use 4kg DBs</td>
+                    </tr>
+                    <tr>
+                        <td>Diamond Push-up</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>3-0-1-0</td>
+                        <td>45s</td>
+                        <td>Focus on triceps</td>
+                    </tr>
+                    <tr>
+                        <td>Dumbbell Overhead Press</td>
+                        <td>4</td>
+                        <td>10–12</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>One or both arms</td>
+                    </tr>
+                    <tr>
+                        <td>Lateral Raise (Single Arm)</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>2-1-2-0</td>
+                        <td>45s</td>
+                        <td>Use 2–4kg</td>
+                    </tr>
+                    <tr>
+                        <td>Chair Dips</td>
+                        <td>3</td>
+                        <td>15–20</td>
+                        <td>2-0-2-0</td>
+                        <td>60s</td>
+                        <td>Use sturdy edge</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table id="pullA" class="workout-table">
+                <thead>
+                    <tr>
+                        <th>Exercise</th>
+                        <th>Sets</th>
+                        <th>Reps</th>
+                        <th>Tempo</th>
+                        <th>Rest</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Inverted Row (under table)</td>
+                        <td>4</td>
+                        <td>10–15</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Elevate feet for difficulty</td>
+                    </tr>
+                    <tr>
+                        <td>Single-Arm Row (chair)</td>
+                        <td>4</td>
+                        <td>10–12</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Use 4kg DB</td>
+                    </tr>
+                    <tr>
+                        <td>Dumbbell Pullover</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>3-0-1-0</td>
+                        <td>45s</td>
+                        <td>Focus on lats</td>
+                    </tr>
+                    <tr>
+                        <td>Superman Back Extensions</td>
+                        <td>3</td>
+                        <td>15–20</td>
+                        <td>3-0-1-0</td>
+                        <td>45s</td>
+                        <td>Pause at top</td>
+                    </tr>
+                    <tr>
+                        <td>Biceps Curl (Standing)</td>
+                        <td>3</td>
+                        <td>15–20</td>
+                        <td>2-0-2-0</td>
+                        <td>45s</td>
+                        <td>Use 4kg</td>
+                    </tr>
+                    <tr>
+                        <td>Hammer Curl</td>
+                        <td>3</td>
+                        <td>15–20</td>
+                        <td>2-0-2-0</td>
+                        <td>45s</td>
+                        <td>Neutral grip</td>
+                    </tr>
+                    <tr>
+                        <td>Rear Delt Fly (Bent-over)</td>
+                        <td>3</td>
+                        <td>15–20</td>
+                        <td>2-0-2-0</td>
+                        <td>45s</td>
+                        <td>Light weight, slow tempo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table id="legsA" class="workout-table">
+                <thead>
+                    <tr>
+                        <th>Exercise</th>
+                        <th>Sets</th>
+                        <th>Reps</th>
+                        <th>Tempo</th>
+                        <th>Rest</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Goblet Squat</td>
+                        <td>4</td>
+                        <td>15–20</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Hold 4kg dumbbell</td>
+                    </tr>
+                    <tr>
+                        <td>Bulgarian Split Squat</td>
+                        <td>4</td>
+                        <td>12–15</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Chair for support</td>
+                    </tr>
+                    <tr>
+                        <td>Romanian Deadlift</td>
+                        <td>4</td>
+                        <td>12–15</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Use 4kg DBs</td>
+                    </tr>
+                    <tr>
+                        <td>Glute Bridge (shoulders/feet raised)</td>
+                        <td>4</td>
+                        <td>15–20</td>
+                        <td>3-0-1-0</td>
+                        <td>45s</td>
+                        <td>Pause at top</td>
+                    </tr>
+                    <tr>
+                        <td>Nordic Curl (feet anchored)</td>
+                        <td>3</td>
+                        <td>6–10</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Use wall/chair</td>
+                    </tr>
+                    <tr>
+                        <td>Single-Leg Calf Raise</td>
+                        <td>4</td>
+                        <td>15–20</td>
+                        <td>2-0-1-0</td>
+                        <td>30s</td>
+                        <td>Use wall for balance</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table id="pushB" class="workout-table">
+                <thead>
+                    <tr>
+                        <th>Exercise</th>
+                        <th>Sets</th>
+                        <th>Reps</th>
+                        <th>Tempo</th>
+                        <th>Rest</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pike Push-up</td>
+                        <td>4</td>
+                        <td>10–12</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Targets shoulders</td>
+                    </tr>
+                    <tr>
+                        <td>Overhead Press (DB)</td>
+                        <td>3</td>
+                        <td>10–12</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Strict form</td>
+                    </tr>
+                    <tr>
+                        <td>Front Raise (DB)</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>2-0-2-0</td>
+                        <td>45s</td>
+                        <td>Light weight</td>
+                    </tr>
+                    <tr>
+                        <td>Lateral Raise</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>2-0-2-0</td>
+                        <td>45s</td>
+                        <td>Slow and controlled</td>
+                    </tr>
+                    <tr>
+                        <td>Incline Push-up</td>
+                        <td>4</td>
+                        <td>15–20</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Hands elevated</td>
+                    </tr>
+                    <tr>
+                        <td>Overhead Triceps Extension</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>3-0-1-0</td>
+                        <td>45s</td>
+                        <td>Use 2–4kg DB</td>
+                    </tr>
+                </tbody>
+            </table>
+            </table>
+
+            <table id="pullB" class="workout-table">
+                <thead>
+                    <tr>
+                        <th>Exercise</th>
+                        <th>Sets</th>
+                        <th>Reps</th>
+                        <th>Tempo</th>
+                        <th>Rest</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Inverted Row (feet up)</td>
+                        <td>4</td>
+                        <td>8–12</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Increase difficulty</td>
+                    </tr>
+                    <tr>
+                        <td>Single-Arm Row</td>
+                        <td>4</td>
+                        <td>10–12</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>4kg dumbbell</td>
+                    </tr>
+                    <tr>
+                        <td>Pullover</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>3-0-1-0</td>
+                        <td>45s</td>
+                        <td>Stretch lats</td>
+                    </tr>
+                    <tr>
+                        <td>Y-T-W Raises</td>
+                        <td>3</td>
+                        <td>15–20</td>
+                        <td>2-0-2-0</td>
+                        <td>45s</td>
+                        <td>Rear delt isolation</td>
+                    </tr>
+                    <tr>
+                        <td>Concentration Curl</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>2-0-2-0</td>
+                        <td>45s</td>
+                        <td>Strict form</td>
+                    </tr>
+                    <tr>
+                        <td>Hammer Curl</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>2-0-2-0</td>
+                        <td>45s</td>
+                        <td>Neutral grip</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table id="legsB" class="workout-table">
+                <thead>
+                    <tr>
+                        <th>Exercise</th>
+                        <th>Sets</th>
+                        <th>Reps</th>
+                        <th>Tempo</th>
+                        <th>Rest</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pistol Squat</td>
+                        <td>4</td>
+                        <td>8–10</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Use support if needed</td>
+                    </tr>
+                    <tr>
+                        <td>Single-Leg RDL</td>
+                        <td>4</td>
+                        <td>10–12</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>4kg dumbbell</td>
+                    </tr>
+                    <tr>
+                        <td>Hamstring Slides (towel)</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Use smooth surface</td>
+                    </tr>
+                    <tr>
+                        <td>Glute Bridge (single-leg)</td>
+                        <td>4</td>
+                        <td>12–15</td>
+                        <td>3-0-1-0</td>
+                        <td>45s</td>
+                        <td>Pause at top</td>
+                    </tr>
+                    <tr>
+                        <td>Lateral Lunge</td>
+                        <td>3</td>
+                        <td>12–15</td>
+                        <td>3-0-1-0</td>
+                        <td>60s</td>
+                        <td>Control form</td>
+                    </tr>
+                    <tr>
+                        <td>Single-Leg Calf Raise</td>
+                        <td>4</td>
+                        <td>15–20</td>
+                        <td>2-0-1-0</td>
+                        <td>30s</td>
+                        <td>Use support if needed</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="nav-menu">
+        <a href="index.html" class="nav-link">Timer</a>
+        <a href="workouts.html" class="nav-link active">Workouts</a>
+    </div>
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 20px;
             background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(230,230,230,0.5) 100%);
+            min-height: 100vh;
+            box-sizing: border-box;
+}
+
         }
         .container {
             text-align: center;
@@ -23,162 +428,138 @@
             border-radius: 15px;
             width: 350px;
         }
-        #timer {
-            font-size: 2.5em;
-            margin: 20px 0;
-            color: #333;
-            border: 2px solid rgba(0,0,0,0.1);
-            border-radius: 10px;
-            padding: 10px;
-        }
-        .button-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        .table-buttons {
+            display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
-        button {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-            margin: 0;
+        .table-btn {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
             padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
             transition: all 0.2s ease;
-            background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.05));
-            color: #333;
-        }
-        .reset-btn {
-            background: linear-gradient(to right, rgba(255,0,0,0.1), rgba(255,0,0,0.05));
-            color: #333;
-        }
-        .click-btn {
             background: linear-gradient(to right, rgba(0,0,255,0.1), rgba(0,0,255,0.05));
             color: #333;
         }
-        button:hover {
+        .table-btn:hover {
             opacity: 0.9;
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        button:active {
-            transform: scale(0.95);
+        .table-btn.active {
+            background: linear-gradient(to right, rgba(0,0,255,0.2), rgba(0,0,255,0.1));
+            transform: scale(1.02);
         }
-        select {
-            margin: 10px 0;
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid rgba(0,0,0,0.1);
-            background: linear-gradient(to right, rgba(255,255,255,0.5), rgba(230,230,230,0.5));
-            font-family: 'Inter', sans-serif;
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto;
         }
-        #clickCounter {
-            margin: 20px 0;
-            font-size: 1.2em;
+        table {
+            display: none;
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        table.active {
+            display: table;
+        }
+        .workout-table {
+            display: block;
+            overflow: hidden;
+        }
+        .workout-table thead {
+            display: table-header-group;
+        }
+        .workout-table tbody {
+            display: table-row-group;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: 700;
+            text-align: center;
+            padding: 15px;
+        }
+        thead {
+            background-color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        tbody {
+            display: table-row-group;
+        }
+        td {
+            padding: 15px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .nav-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            border-top: 2px solid rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        .nav-link {
+            text-decoration: none;
             color: #333;
-            border: 2px solid rgba(0,0,0,0.1);
-            border-radius: 10px;
-            padding: 10px;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover {
+            background: rgba(0, 0, 255, 0.1);
+        }
+        .nav-link.active {
+            background: linear-gradient(to right, rgba(0,0,255,0.1), rgba(0,0,255,0.05));
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <div id="timer">00:00</div>
-        
-        <select id="timerSelect">
-            <option value="30">30 seconds</option>
-            <option value="60">1 minute</option>
-            <option value="120">2 minutes</option>
-        </select>
-        
-        <div class="button-container">
-            <button id="startBtn">Start Timer</button>
-            <button id="timerResetBtn" class="reset-btn">Reset Timer</button>
-        </div>
-        
-        <div id="clickCounter">0</div>
-        
-        <div class="button-container">
-            <button id="clickBtn" class="click-btn">Click</button>
-            <button id="clickResetBtn" class="reset-btn">Reset Clicks</button>
-        </div>
-    </div>
-
-    <audio id="beepSound" src="beep.mp3"></audio>
 
     <script>
-        const timerDisplay = document.getElementById('timer');
-        const timerSelect = document.getElementById('timerSelect');
-        const startBtn = document.getElementById('startBtn');
-        const timerResetBtn = document.getElementById('timerResetBtn');
-        const clickBtn = document.getElementById('clickBtn');
-        const clickResetBtn = document.getElementById('clickResetBtn');
-        const clickCounterDisplay = document.getElementById('clickCounter');
-        const beepSound = document.getElementById('beepSound');
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.table-btn');
+            const tables = document.querySelectorAll('.workout-table');
 
-        let timer;
-        let timeLeft;
-        let clickCount = 0;
-        let isTimerRunning = false;
+            // Initialize by showing the first table
+            const firstButton = buttons[0];
+            if (firstButton) {
+                firstButton.click();
+            }
 
-        function updateTimerDisplay(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
-            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-        }
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    button.classList.add('active');
 
-        function startTimer() {
-            if (isTimerRunning) return;
-            
-            timeLeft = parseInt(timerSelect.value);
-            isTimerRunning = true;
-            
-            timer = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay(timeLeft);
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    isTimerRunning = false;
-                    beepSound.play();
-                    timerDisplay.textContent = '00:00';
-                }
-            }, 1000);
-        }
+                    // Hide all tables
+                    tables.forEach(table => {
+                        table.style.display = 'none';
+                    });
 
-        function resetTimer() {
-            clearInterval(timer);
-            isTimerRunning = false;
-            timeLeft = parseInt(timerSelect.value);
-            updateTimerDisplay(timeLeft);
-        }
-
-        function updateClickCounter() {
-            clickCount++;
-            clickCounterDisplay.textContent = `${clickCount}`;
-        }
-
-        function resetClickCounter() {
-            clickCount = 0;
-            clickCounterDisplay.textContent = '0';
-        }
-
-        startBtn.addEventListener('click', () => {
-            startTimer();
+                    // Show the selected table
+                    const selectedTable = document.getElementById(button.dataset.table);
+                    if (selectedTable) {
+                        selectedTable.style.display = 'table';
+                    }
+                });
+            });
         });
-
-        clickBtn.addEventListener('click', () => {
-            updateClickCounter();
-        });
-
-        timerResetBtn.addEventListener('click', resetTimer);
-        clickResetBtn.addEventListener('click', resetClickCounter);
-
-        // Initialize timer display
-        updateTimerDisplay(parseInt(timerSelect.value));
     </script>
 </body>
 </html>
